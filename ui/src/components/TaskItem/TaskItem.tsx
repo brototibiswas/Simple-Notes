@@ -1,3 +1,4 @@
+import DeleteButton from "../DeleteIcon/DeleteButton";
 import styles from "./TaskItem.module.css";
 
 interface TaskItemProps {
@@ -11,7 +12,7 @@ const TaskItem = ({ value, id, onDelete }: TaskItemProps) => {
         <ul key={`task-${id}`} className={styles.taskItemContainer}>
             <li>
                 <p className={styles.taskItemText}>{value}</p>
-                <button type="button" onClick={() => onDelete(id)} className={styles.taskDeleteBtn} aria-label={`delete task ${value}`}>X</button>
+                <DeleteButton itemId={id} ariaLabel={`delete task ${value}`} onDelete={onDelete} />
             </li>
         </ul>
     )
