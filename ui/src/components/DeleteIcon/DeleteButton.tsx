@@ -7,8 +7,14 @@ interface DeleteButtonProps {
 }
 
 const DeleteButton = ({ itemId, ariaLabel, onDelete }: DeleteButtonProps) => {
+
+    const handleDeleteClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        onDelete(itemId)
+    }
     return (
-        <button type="button" onClick={() => onDelete(itemId)} className={styles.redIcon} aria-label={ariaLabel}>X</button>
+        <button type="button" onClick={(e) => handleDeleteClick(e)} className={styles.redIcon} aria-label={ariaLabel}>X</button>
     )
 }
 

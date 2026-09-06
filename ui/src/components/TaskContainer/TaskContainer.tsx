@@ -1,22 +1,24 @@
-import { useRef, useState } from "react";
 import TaskForm from "../TaskForm/TaskForm";
 import TaskList from "../TaskList/TaskList";
-import { Task } from "../../types/task";
-import { useTasks } from "../../hooks/useTasks";
+import { useNotesContext } from "../../context/NotesContext";
 
-const TaskContainer = () => {
-    const { tasks, addTask, deleteTask } = useTasks()
+interface TaskContainerProps {
+    noteId: string | undefined;
+}
+
+const TaskContainer = ({ noteId }: TaskContainerProps) => {
+    const { tasks, addTask, deleteTask } = useNotesContext()
+
+    const onTaskAdd = (content: string) => {
+        if (!noteId) return;
+        addTask(content, Number(noteId));
+    }
 
     return (
-        <>
-            {
-                tasks.length > 0 && (<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid lightgrey', width: '500px', margin: '0 auto', padding: '12px' }}>
-                    <h1>Todo List</h1>
-                    <TaskForm onSubmit={addTask} />
-                    <TaskList tasks={tasks} onDelete={deleteTask} />
-                </div>)
-            }
-        </>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', border: '1px solid lightgrey', width: '500px', margin: '0 auto', padding: '12px' }}>
+            <TaskForm onSubmit={onTaskAdd} />
+            <TaskList tasks={tasks} onDelete={deleteTask} />
+        </div>
 
     )
 }
