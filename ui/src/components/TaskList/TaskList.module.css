@@ -1,0 +1,9 @@
+.taskListContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+    gap: 10px;
+    width: 100%;
+    max-width: 360px;
+}

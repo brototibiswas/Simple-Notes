@@ -1,0 +1,25 @@
+.taskItemContainer {
+    list-style: none;
+    margin: 0;
+    padding: 6px;
+    border: 1px solid #ccc;
+    background-color: lightYellow;
+
+}
+
+.taskItemContainer li {
+    display: flex;
+    justify-content: space-between;
+}
+
+.taskItemText {
+    font-weight: bold;
+    margin: 0 0 0 6px;
+    width: 200px;
+    word-wrap: break-word;
+}
+
+.taskDeleteBtn {
+    padding: 2px;
+    background-color: crimson;
+}
