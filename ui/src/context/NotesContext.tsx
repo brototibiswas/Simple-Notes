@@ -8,7 +8,8 @@ interface NotesContextValue {
     addNote: (title: string) => void;
     deleteNote: (noteId: number) => void;
     addTask: (value: string, noteId: number) => void;
-    deleteTask: (id: number) => void;
+    deleteTasks: (ids: number[]) => void;
+    updateTask: (id: number, value: string) => void;
 }
 
 // create a context that will be channeled to components consuming it
@@ -32,13 +33,18 @@ export function NotesProvider({ children }: { children: React.ReactNode }) {
         setTasks([...tasks, task])
     }
 
-    const deleteTask = (id: number) => {
-        setTasks(prev => prev.filter((item) => item.id !== id))
+    const deleteTasks = (ids: number[]) => {
+        setTasks(tasks.filter(task => !ids.includes(task.id)))
     }
+
+    const updateTask = (id: number, value: string) => {
+        setTasks(prev => prev.map((task) => (task.id === id ? { ...task, content: value } : task)))
+    }
+
 
     // everyone consuming this context will have access to the values.
     return (
-        <NotesContext.Provider value={{ notes, tasks, addNote, deleteNote, addTask, deleteTask }}>
+        <NotesContext.Provider value={{ notes, tasks, addNote, deleteNote, addTask, deleteTasks, updateTask }}>
             {children}
         </NotesContext.Provider>
     )

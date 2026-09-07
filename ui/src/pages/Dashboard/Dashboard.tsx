@@ -14,6 +14,10 @@ const Dashboard = () => {
         setShowCreateNoteModal(!showCreateNoteModal)
     }
 
+    const handleDeleteNote = (id: number) => {
+        deleteNote(id)
+    }
+
     return (
         <div className={`${globalStyles.container} ${globalStyles.center}`} style={{ backgroundColor: '#f0f0f0' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', marginBottom: '15px' }}>
@@ -25,7 +29,7 @@ const Dashboard = () => {
 
             <div style={{ width: '100%', display: 'flex', flexDirection: 'row', gap: '6px', flexWrap: 'wrap', alignContent: 'flex-start', alignItems: 'flex-start' }}>
                 {notes.length > 0 && notes.map(note => (
-                    <NoteCard id={note.id} title={note.title} onDelete={deleteNote} />
+                    <NoteCard id={note.id} title={note.title} onDelete={handleDeleteNote} />
                 ))}
             </div>
         </div>

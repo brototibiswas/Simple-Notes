@@ -18,7 +18,7 @@ const TaskForm = ({ onSubmit }: TaskFormProps) => {
     return (
         <form className={styles.inputItem} onSubmit={(e) => onTaskAdd(e)}>
             <input type="text" placeholder="Enter a task" ref={inputRef} />
-            <button type="submit" aria-label="add task">Add</button>
+            <button type="submit" aria-label="add task" style={{ backgroundColor: 'lemonchiffon' }}>Add</button>
         </form>
     )
 }

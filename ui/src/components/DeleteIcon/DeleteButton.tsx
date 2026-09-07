@@ -1,20 +1,20 @@
 import styles from "./DeleteButton.module.css";
 
 interface DeleteButtonProps {
-    itemId: number;
+    items: number[];
     ariaLabel: string;
-    onDelete: (itemId: number) => void;
+    onDelete: (itemIds: number[]) => void;
 }
 
-const DeleteButton = ({ itemId, ariaLabel, onDelete }: DeleteButtonProps) => {
+const DeleteButton = ({ items, ariaLabel, onDelete }: DeleteButtonProps) => {
 
     const handleDeleteClick = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
-        onDelete(itemId)
+        onDelete(items)
     }
     return (
-        <button type="button" onClick={(e) => handleDeleteClick(e)} className={styles.redIcon} aria-label={ariaLabel}>X</button>
+        <button type="button" onClick={(e) => handleDeleteClick(e)} className={styles.redIcon} aria-label={ariaLabel}>Delete</button>
     )
 }
 
