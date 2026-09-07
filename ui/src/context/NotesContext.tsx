@@ -1,5 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 import { Note, Task } from "../types/task";
+import { notesReducer, initialState } from "../store/notesReducers";
 
 // create values to be shared with whoever consuming the context
 interface NotesContextValue {
@@ -17,34 +18,22 @@ const NotesContext = createContext<NotesContextValue | undefined>(undefined);
 
 // create a broadcaster or context provider that will supply the context values to its children components
 export function NotesProvider({ children }: { children: React.ReactNode }) {
-    const [notes, setNotes] = useState<Note[]>([])
-    const [tasks, setTasks] = useState<Task[]>([])
+    const [state, dispatch] = useReducer(notesReducer, initialState)
 
-    const addNote = (title: string) => {
-        setNotes([...notes, { id: Date.now(), title: title, timeStamp: Date.now() }])
-    }
+    const addNote = (title: string) => dispatch({ type: 'ADD_NOTE', title })
 
-    const deleteNote = (noteId: number) => {
-        setNotes(notes.filter(note => note.id !== noteId))
-    }
+    const deleteNote = (noteId: number) => dispatch({ type: "DELETE_NOTE", id: noteId })
 
-    const addTask = (value: string, noteId: number) => {
-        const task = { id: Date.now(), content: value, timeStamp: Date.now(), noteId: noteId }
-        setTasks([...tasks, task])
-    }
+    const addTask = (value: string, noteId: number) => dispatch({ type: "ADD_TASK", content: value, noteId: noteId })
 
-    const deleteTasks = (ids: number[]) => {
-        setTasks(tasks.filter(task => !ids.includes(task.id)))
-    }
+    const deleteTasks = (ids: number[]) => dispatch({ type: "DELETE_TASKS", ids })
 
-    const updateTask = (id: number, value: string) => {
-        setTasks(prev => prev.map((task) => (task.id === id ? { ...task, content: value } : task)))
-    }
+    const updateTask = (id: number, value: string) => dispatch({ type: "UPDATE_TASK", id, content: value })
 
 
     // everyone consuming this context will have access to the values.
     return (
-        <NotesContext.Provider value={{ notes, tasks, addNote, deleteNote, addTask, deleteTasks, updateTask }}>
+        <NotesContext.Provider value={{ ...state, addNote, deleteNote, addTask, deleteTasks, updateTask }}>
             {children}
         </NotesContext.Provider>
     )
