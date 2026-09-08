@@ -4,7 +4,15 @@
     "module": "CommonJS",
     "outDir": "dist",
     "rootDir": "src",
-    "sourceMap": true
+    "sourceMap": true,
+
+    // sequelize-typescript needs the legacy decorators, and reads column types
+    // off the emitted design:type metadata.
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    // With target ES2022 class fields are emitted as defineProperty, which
+    // overwrites what the decorators set up. Keep the old assignment semantics.
+    "useDefineForClassFields": false
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]
